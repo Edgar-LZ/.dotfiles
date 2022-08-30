@@ -20,7 +20,7 @@ set shiftwidth=4
 set path+=**
 "Display all matching files when we tab complete
 set wildmenu
-set hlsearch
+" set hlsearch
 
 " File browsing
 let g:netrw_liststyle=3

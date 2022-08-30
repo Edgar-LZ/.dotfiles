@@ -111,12 +111,12 @@ source $ZSH/oh-my-zsh.sh
 alias open="xdg-open"
 # git
 alias python="python3"
-alias switch="git switch"
 alias q="exit"
-alias cat="batcat"
+alias cat="bat"
 alias copy="xclip -selection clipboard < "
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+source ~/powerlevel10k/powerlevel10k.zsh-theme

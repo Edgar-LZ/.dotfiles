@@ -1,0 +1,7 @@
+
+#Font confguration
+font:
+  #[...]
+  # Point size
+  size: 9.5
+
