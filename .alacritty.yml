@@ -2,6 +2,8 @@
 #Font confguration
 font:
   #[...]
+  normal:
+    family: "MesloLGS NF"
   # Point size
   size: 9.5
 
