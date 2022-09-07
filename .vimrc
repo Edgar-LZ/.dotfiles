@@ -4,7 +4,7 @@ set belloff=all
 set tabstop=4 softtabstop=4
 set number
 set background=dark
-colorscheme neverland
+colorscheme monokai
 set wrap linebreak
 set incsearch
 set smartcase
