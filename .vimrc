@@ -1,4 +1,5 @@
 syntax on
+set title
 
 set belloff=all
 set tabstop=4 softtabstop=4
