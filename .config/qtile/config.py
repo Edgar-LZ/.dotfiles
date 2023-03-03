@@ -31,6 +31,22 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from os import system
 
+def window_to_previous_screen(qtile, switch_group=False, switch_screen=True):
+        i = qtile.screens.index(qtile.current_screen)
+            if i != 0:
+                group = qtile.screens[i - 1].group.name
+                qtile.current_window.togroup(group, switch_group=switch_group)
+                if switch_screen:
+                    qtile.cmd_to_screen(i - 1)
+
+def window_to_next_screen(qtile, switch_group=False, switch_screen=True):
+    i = qtile.screens.index(qtile.current_screen)
+    if i + 1 != len(qtile.screens):
+        group = qtile.screens[i + 1].group.name
+        qtile.current_window.togroup(group, switch_group=switch_group)
+        if switch_screen:
+            qtile.cmd_to_screen(i + 1)
+
 mod = "mod4"
 terminal = guess_terminal()
 
@@ -79,6 +95,18 @@ keys = [
     Key([],"XF86MonBrightnessDown", lazy.spawn("brightnessctl s 10%-"), desc="Increase brightness"),
     Key([], 'XF86AudioLowerVolume', lazy.spawn('pactl set-sink-volume @DEFAULT_SINK@ -10%')),
     Key([], 'XF86AudioRaiseVolume', lazy.spawn('pactl set-sink-volume @DEFAULT_SINK@ +10%')),
+    Key([super_key],
+        "Left",
+        lazy.to_screen(0)),
+    Key([super_key],
+        "Right",
+        lazy.to_screen(1)),
+    Key([super_key, alt],
+        "Right",
+        lazy.function(window_to_next_screen)),
+    Key([super_key, alt],
+        "Left",
+        lazy.function(window_to_previous_screen)),
 ]
 
 groups = [Group(i) for i in "123456789"]

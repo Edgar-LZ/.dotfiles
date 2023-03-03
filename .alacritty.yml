@@ -32,4 +32,9 @@ colors:
     magenta: "#AB9DF2"
     cyan: "#78DCE8"
     white: "#FCFCFA"
+window:
+  opacity: 1
+
+key_bindings:
+  - { key: N, mods: Alt, action: SpawnNewInstance }
 

@@ -27,10 +27,16 @@ let g:netrw_liststyle=3
 let mapleader=";"
 
 set colorcolumn=80
+autocmd FileType tex    set textwidth=79
+
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 nnoremap <leader>la :VimtexCompile<CR>
-
+vmap ++ <plug>NERDCommenterToggle
+nmap ++ <plug>NERDCommenterToggle
+" :Plug install
+"
 call plug#begin('~/.vim/plugged')
 Plug 'lervag/vimtex'
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'preservim/nerdcommenter'
 call plug#end()
