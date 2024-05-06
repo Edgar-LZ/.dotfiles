@@ -123,5 +123,8 @@ alias copy="xclip -selection clipboard < "
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Install Ruby Gems to ~/gems'
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
 
 bindkey -v

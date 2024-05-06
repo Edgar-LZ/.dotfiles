@@ -9,6 +9,7 @@ colorscheme monokai
 set wrap linebreak
 set incsearch
 set smartcase
+set clipboard=unnamedplus
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
@@ -26,6 +27,8 @@ set wildmenu
 " File browsing
 let g:netrw_liststyle=3
 let mapleader=";"
+
+
 
 set colorcolumn=80
 autocmd FileType tex    set textwidth=79
