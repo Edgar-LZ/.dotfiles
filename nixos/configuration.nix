@@ -164,6 +164,9 @@
     xwayland.enable = true;
   };
 
+  # Thunar
+  programs.thunar.enable = true;
+
   # Backlight
   programs.light.enable = true;
 
@@ -207,7 +210,6 @@
     dunst
     libnotify
     swww
-    alacritty
     kitty
     rofi-wayland
   ];
