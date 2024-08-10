@@ -13,14 +13,21 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+  home.stateVersion = "24.05"; # Please read the comment before changing
 
     # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+	pkgs.grim
+	pkgs.slurp
+	pkgs.feh
+	pkgs.vlc
+	pkgs.fastfetch
   	pkgs.zathura
-	pkgs.texlive.combined.scheme-medium
+	pkgs.texlive.combined.scheme-full
 	pkgs.gruvbox-dark-gtk
+	pkgs.obs-studio
+	pkgs.pavucontrol
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -111,6 +118,8 @@
     home.file.".config/gtk-3.0/gtk.css".source = "${pkgs.gruvbox-dark-gtk}/share/themes/gruvbox-dark/gtk-3.0/gtk.css";
 
     programs.kitty.settings = {
+
+	background_opacity = "0.8";
     	
 	confirm_os_window_close  = 0;
 
@@ -168,8 +177,8 @@
 
     programs.git = {
       enable = true;
-      userName = "USER";
-      userEmail = "MAIL";
+      userName = "Edgar-LZ";
+      userEmail = "edgarosv.lz@gmail.com";
     };
 
   # Let Home Manager install and manage itself.

@@ -21,8 +21,21 @@
   };
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+	loader = {
+		systemd-boot.enable = true;
+		efi.canTouchEfiVariables = true;
+		};
+
+  #Boot kernel modules for controllers
+		kernelModules = [ "i2c-dev" "xpad" "hid-nintendo" "xone" "xpadneo" ];
+		extraModulePackages = [
+			config.boot.kernelPackages.ddcci-driver
+			config.boot.kernelPackages.xone
+			config.boot.kernelPackages.xpadneo
+		(config.boot.kernelPackages.callPackage ./xpad.nix {})
+		];
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -52,14 +65,46 @@
     LC_TIME = "es_MX.UTF-8";
   };
 
+  # 8bitdoController xpad
+  services = {
+  	udev.extraRules = ''
+ACTION=="add", \
+	ATTRS{idVendor}=="2dc8", \
+	ATTRS{idProduct}=="3106", \
+	RUN+="${pkgs.kmod}/bin/modprobe xpad", \
+	RUN+="${pkgs.bash}/bin/sh -c 'echo 2dc8 3106 > /sys/bus/usb/drivers/xpad/new_id'"
+'';
+  };
+
+  # Flatpak
+  services.flatpak.enable = true;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  services.xserver.displayManager.sddm.enable = true;
+  services.displayManager.sddm.enable = true;
 
   # Enable the XFCE Desktop Environment.
   # services.xserver.displayManager.lightdm.enable = true;
   # services.xserver.desktopManager.xfce.enable = true;
+
+  # Bluetooth
+  hardware.bluetooth.enable = true; # Enables support for Bluetooth
+  hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth.input.General.ClassicalBondedOnly = false;
+  services.blueman.enable = true;
+
+  # USB services
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+
+
+  systemd.user.services.mpris-proxy = {
+    description = "Mpris proxy";
+    after = [ "network.target" "sound.target" ];
+    wantedBy = [ "default.target" ];
+    serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
+    };
 
   #NVIDIA
   services.xserver.videoDrivers = ["nvidia"];
@@ -113,8 +158,8 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "latam";
-    xkbVariant = "";
+    xkb.layout = "latam";
+    xkb.variant = "";
   };
 
   # Configure console keymap
@@ -160,7 +205,6 @@
 
   programs.hyprland = {
     enable = true;
-    enableNvidiaPatches = true;
     xwayland.enable = true;
   };
 
@@ -177,6 +221,8 @@
   programs.steam.gamescopeSession.enable = true;
 
   programs.gamemode.enable = true;
+
+  hardware.steam-hardware.enable = true;
 
   environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS =
@@ -212,6 +258,7 @@
     swww
     kitty
     rofi-wayland
+    ntfs3g # Might need exfat-util or something similar to work correctly
   ];
 
   # Desktop portal handle desktop progams interactions with each other, screen sharing, file opening etc
@@ -238,6 +285,12 @@
 
   ]; 
 
+  fonts.fontconfig = {
+	defaultFonts = {
+		emoji = ["noto-fonts-emoji"];
+	};
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -263,6 +316,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
 
 }
